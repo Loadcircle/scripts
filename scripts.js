@@ -287,6 +287,19 @@ $('.limpiar_campos').click(function(){
 
 
 
+    //vali url
+
+    const url_is_valid = (url) => {
+
+        if(url.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm)){
+            return true;
+        }
+
+    }
+
+    //valid url
+
+
 
 
 if($(window).width() <= 768){  
