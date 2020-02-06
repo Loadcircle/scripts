@@ -308,3 +308,62 @@ if($(window).width() <= 768){
         $('#password').prop('type', 'text');
     });   
 }
+
+
+//Hubspot mostrar blogs
+  <div class="lista_blogs_recomendados">
+    {% set rec_posts = blog_recent_posts('default', 3) %}
+    {% for rec_post in rec_posts %}
+        <div class="post_item">
+          <a href="{{ rec_post.absolute_url }}">
+          <div class="pi_img" style="background-image: url({{ rec_post.featured_image }})"> </div>
+          </a>
+          <div class="pi_content">
+            <div class="pi_date_tag helve">
+              <p class="f16 gris">
+                {{rec_post.publish_date|datetimeformat('%d . %m . %Y')}}
+              </p>
+              <p class="f16 gris">
+                {% if rec_post.topic_list %}
+                {% for topic in rec_post.topic_list %} 
+                {% if loop.index <=1 %} 
+                <a href="{{ blog_tag_url(group.id, topic.slug) }}" class="tag__name">{{ topic.name }}</a>{% if not loop.last %} {% endif %} 
+                {% endif %} 
+                {% endfor %} {% endif %}
+              </p>
+            </div>
+          <a href="{{ rec_post.absolute_url }}">
+            <h5 class="bold margin_0">
+              {{ rec_post.name }}
+            </h5>
+          </a>
+          <a class="blue bold read_more_link" href="{{ rec_post.absolute_url }}">LEER MÁS ></a>
+          </div>
+        </div>
+    {% endfor %}
+    {#
+    {% for i in module.posts %}
+    <div class="post_item">
+      <a href="{{i.enlace.url.href}}">
+      <div class="pi_img" style="background-image: url({{i.imagen.src}})"> </div>
+      </a>
+      <div class="pi_content">
+        <div class="pi_date_tag helve">
+          <p class="f16 gris">
+            {{i.date}}
+          </p>
+          <p class="f16 gris">
+            {{i.tag}}
+          </p>
+        </div>
+      <a href="{{i.enlace.url.href}}">
+        <h5 class="bold margin_0">
+          {{i.titulo}}
+        </h5>
+      </a>
+      <a class="blue bold read_more_link" href="{{i.enlace.url.href}}">LEER MÁS ></a>
+      </div>
+    </div>
+    {% endfor %}
+    
+#}
