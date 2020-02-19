@@ -385,3 +385,8 @@ Counter-------------------------------------
           }
       });
     });
+     
+     
+$('.hs_cos_wrapper_type_form').on('hsvalidatedsubmit', '.hs-form', function (e) {
+    //analytics code goes here
+});
