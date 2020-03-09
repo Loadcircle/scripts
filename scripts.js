@@ -390,3 +390,147 @@ Counter-------------------------------------
 $('.hs_cos_wrapper_type_form').on('hsvalidatedsubmit', '.hs-form', function (e) {
     //analytics code goes here
 });
+     
+     window.addEventListener('DOMContentLoaded', ()=>{
+
+		let deploy_item_holder  = document.querySelectorAll('.desplegable_item');
+    let default_height = document.querySelector('.ldesp_titulo').offsetHeight;
+  
+		deploy_item_holder.forEach((e)=>{
+		  e.querySelector('.ldesp_titulo').onclick = ()=>{
+			var active = e.classList.contains('active') ? true : false;
+			deploy_item_holder.forEach((k)=>{
+				k.classList.remove('active');
+				k.style.maxHeight = default_height + 'px';
+			});
+			if(active){
+			  e.classList.remove('active');
+			  e.style.maxHeight = default_height + 'px';
+			}else{
+			  e.classList.add('active');
+			  e.style.maxHeight = (e.querySelector('.ldesp_contenido').offsetHeight + default_height) +'px';
+			};
+		  };
+		});
+  
+});
+     
+     // -------------------------- FORM HUBSPOPT AND AWAIT ELEMENT
+     window.addEventListener('DOMContentLoaded', ()=>{
+  
+  const SEARCH_DELAY = 500;
+  function waitForElementToBeAdded(cssSelector) {
+      return new Promise((resolve) => {
+          const interval = setInterval(() => {
+              if (element = document.querySelector(cssSelector)) {
+                  clearInterval(interval);
+                  resolve(element);
+              }
+          }, SEARCH_DELAY);
+      });
+  }
+
+  async function start_wait_form_hubspot() {
+    var show_form = await waitForElementToBeAdded(".hs-form");     
+    
+    let inputs = document.querySelectorAll('.general_form input:not([name=hs_context]):not([type=submit])');       
+    let select = document.querySelectorAll('.general_form select');
+
+    
+    checking_submit();
+    
+    inputs.forEach((e)=>{
+      
+      if(e.value != ""){
+        e.parentElement.parentElement.classList.add('active');
+        e.classList.add('validated');
+      }
+      
+      if(e.type == 'checkbox' || e.type == 'radio'){
+        if(e.checked){
+            e.parentElement.classList.add('active');          
+        }
+        e.addEventListener('change', ()=>{
+          checking_submit();
+          console.log('change')
+          if(e.checked){
+            e.parentElement.classList.add('active');
+          }else{
+            e.parentElement.classList.remove('active');
+          }        
+        })
+      }else{          
+        e.addEventListener('change', checking_submit);
+        e.addEventListener('keyup', checking_submit);
+        e.addEventListener('keydown', checking_submit);
+        
+        e.addEventListener('focus',  ()=>{
+          checking_submit();
+          e.closest(".hs-form-field").classList.add('active');
+        });
+        e.addEventListener('focusout',  ()=>{
+          checking_submit();
+          if(e.value == ''){
+            e.closest(".hs-form-field").classList.remove('active');
+            e.classList.remove('validated')
+          }      
+          if(e.value != '' && !e.classList.contains('error')){
+            e.classList.add('validated')
+          }
+        });
+      }
+    });
+
+    select.forEach((e)=>{
+      
+      if(e.value != ""){
+        e.parentElement.parentElement.classList.add('active');
+      }
+      e.addEventListener('change', ()=>{
+        checking_submit();
+        if(e.value != ''){
+          e.closest(".hs-form-field").classList.add('active');
+        }else{
+          e.closest(".hs-form-field").classList.remove('active');
+        }        
+      });
+    });
+  
+    function checking_submit(){    
+      let input_submit = document.querySelectorAll('input[type=submit]');
+
+      input_submit.forEach(e=>{
+        var this_inputs = e.closest('form').querySelectorAll('input:not([type=submit]):not([type=radio]):not([type=checkbox]), select');
+        var terminos = e.closest('form').querySelectorAll('input[type=radio], input[type=checkbox]');
+        var this_valid = 0;
+
+        terminos.forEach(k=>{
+          if(k.checked){
+
+          }else{
+            this_valid ++;
+          }
+        });
+        this_inputs.forEach(k=>{
+          if(k.value != '' && !k.classList.contains('error')){
+
+          }else{
+            this_valid ++;
+          }
+        });
+
+        console.log(this_valid);
+        if(this_valid != 0){
+          e.classList.remove('active');
+        }else{
+          e.classList.add('active');        
+        }
+
+      });
+    }
+    
+  }
+  start_wait_form_hubspot();
+
+  
+});
