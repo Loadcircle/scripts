@@ -534,3 +534,16 @@ $('.hs_cos_wrapper_type_form').on('hsvalidatedsubmit', '.hs-form', function (e) 
 
   
 });
+     
+     //hubspot form//
+     
+        {%
+            form
+            form_to_use="{{module.form.form_id}}"
+            response_response_type="{{module.form.response_type}}"
+            response_message="{{module.form.response_message}}"
+            response_redirect_id="{{module.form.redirect_id}}"
+            response_redirect_url="{{module.form.redirect_url}}"
+            follow_up_type_simple='{{ module.follow_up_type_simple }}',
+            follow_up_type_automation='{{ module.follow_up_type_automation }}',
+          %} 
