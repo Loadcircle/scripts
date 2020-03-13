@@ -561,3 +561,12 @@ $('.hs_cos_wrapper_type_form').on('hsvalidatedsubmit', '.hs-form', function (e) 
   {{- output -}}
 
 {%- endmacro -%}
+
+  {% if tag %}
+  <div class="for_desk topic_picked">
+    <a class="underline muted f16" href="https://blog.pad.edu">&lt; Regresar al inicio</a>
+    <h1 class="margin_0">
+      {{ page_meta.html_title|split(' | ')|last }}
+    </h1>    
+  </div>
+  {% endif %}
