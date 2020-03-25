@@ -1,4 +1,8 @@
-  //Deshabilitar los botones de slick ----------------------------------------------------------------
+//Validar URL REGEX
+if(url.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm)){
+    return true;
+}  
+//Deshabilitar los botones de slick ----------------------------------------------------------------
   $('#slick_mapa').on('init', function(event, slick){
     
     //Disable slick buttons
